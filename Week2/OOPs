@@ -1,1 +1,63 @@
+#include <iostream>
+using namespace std;
+
+namespace music {
+    class Playable {
+    public:  
+        virtual void play() = 0;
+        virtual ~Playable() {}
+    };
+
+}
+
+namespace music {
+    namespace string {
+        class Veena : public music::Playable {
+        public:
+            void play() override {
+                cout << "Playing Veena : sweet string melodies..." << endl;
+            }
+        };
+    }
+}
+
+namespace music {
+    namespace wind {
+        class Saxophone : public music::Playable {
+        public:
+            void play() override {
+               cout <<  "Playing Saxophone : Smooth jazz notes....." << endl;
+            }
+        };
+    }
+}
+
+namespace live {
+  class Test {
+    public:
+    static void run() {
+      music::string::Veena myVeena;
+      myVeena.play();
+
+      music::wind::Saxophone mySaxophone;
+      mySaxophone.play();
+
+      music::Playable* polymorphInstrument;
+      cout << "\n-----Testing Polymorphism via Playable Pointer----" << endl;
+      polymorphInstrument = &myVeena;
+      polymorphInstrument->play();
+   
+      polymorphInstrument = &mySaxophone;
+      polymorphInstrument->play();
+
+
+    }
+
+
+  };
+}
+int main() {
+    live::Test::run();
+    return 0;
+}
 
