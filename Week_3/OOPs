@@ -1,1 +1,80 @@
+#include <iostream>
+#include <string>
+#include <random>
 
+class Compartment {
+public:
+    virtual string notice() = 0;
+    
+   
+    virtual ~Compartment() {}
+};
+
+
+class FirstClass : public Compartment {
+public:
+    string notice() override {
+        return "First Class: Please maintain silence. Premium reservation required.";
+    }
+};
+
+class Ladies : public Compartment {
+public:
+     string notice() override {
+        return "Ladies: Strictly reserved for female passengers.";
+    }
+};
+
+class General : public Compartment {
+public:
+   string notice() override {
+        return "General: Open seating. Please accommodate fellow passengers.";
+    }
+};
+
+class Luggage : public Compartment {
+public:
+    string notice() override {
+        return "Luggage: Only cargo and heavy baggage allowed. No passengers.";
+    }
+};
+
+int main() {
+   
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> distr(1, 4);
+
+    Compartment* train[10];
+
+    for (int i = 0; i < 10; ++i) {
+        int choice = distr(gen);
+
+        switch (choice) {
+            case 1:
+                train[i] = new FirstClass();
+                break;
+            case 2:
+                train[i] = new Ladies();
+                break;
+            case 3:
+                train[i] = new General();
+                break;
+            case 4:
+                train[i] = new Luggage();
+                break;
+        }
+    }
+
+
+    cout << "--- Train Composition & Notices ---" << endl;
+    for (int i = 0; i < 10; ++i) {
+        cout << "Coach " << (i + 1) << ": " << train[i]->notice() << endl;
+    }
+
+    for (int i = 0; i < 10; ++i) {
+        delete train[i];
+    }
+
+    return 0;
+}
