@@ -1,1 +1,33 @@
+#include <iostream>
+using namespace std;
 
+// Interface named Test
+class Test {
+public:
+    virtual int square(int num) = 0; // Pure virtual function
+    virtual ~Test() {}               // Virtual destructor
+};
+
+// Arithmetic class implementing the Test interface
+class Arithmetic : public Test {
+public:
+    int square(int num) override {
+        return num * num;
+    }
+};
+
+// ToTestInt class utilizing the Arithmetic class object
+class ToTestInt {
+public:
+    void run() {
+        Arithmetic a;
+        int value = 5;
+        cout << "Square of " << value << " is: " << a.square(value) << endl;
+    }
+};
+
+int main() {
+    ToTestInt testObj;
+    testObj.run();
+    return 0;
+}
